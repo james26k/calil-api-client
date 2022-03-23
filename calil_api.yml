@@ -1,3 +1,4 @@
+# - OpenAPI Object
 openapi: 3.0.1
 info:
   title: Calil API
@@ -5,5 +6,28 @@ info:
     カーリルの図書館API
 
     https://calil.jp/doc/api.html
+
+    API仕様書
+
+    https://calil.jp/doc/api_ref.html
   version: 1.0.0
-paths: {}
+paths:
+  # - Path Object
+  # 図書館データベース
+  /library:
+    # - Path Item Object
+    get:
+      # - Operation Object
+      summary: Get a list of libraries
+      description: 指定した条件に合う図書館の一覧取得
+      responses:
+        "200":
+          description: "OK"
+  # 蔵書検索
+  /check:
+    get:
+      summary: Check the presence and the lending status of a book
+      description: 図書館に対して蔵書の有無と貸出状況を問い合わせ
+      responses:
+        "200":
+          description: "OK"
