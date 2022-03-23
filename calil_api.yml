@@ -1,5 +1,9 @@
 openapi: 3.0.1
 info:
   title: Calil API
+  description: |
+    カーリルの図書館API
+
+    https://calil.jp/doc/api.html
   version: 1.0.0
 paths: {}
