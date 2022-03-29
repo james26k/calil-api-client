@@ -11,6 +11,8 @@ info:
 
     https://calil.jp/doc/api_ref.html
   version: 1.0.0
+tags:
+  - name: API
 paths:
   # - Path Object
   # 図書館データベース
@@ -19,15 +21,137 @@ paths:
     get:
       # - Operation Object
       summary: Get a list of libraries
-      description: 指定した条件に合う図書館の一覧取得
+      description: |
+        指定した条件に合う図書館の一覧取得
+
+        ※ `pref` `systemid` `geocode` のいずれかは必ず指定する必要があります。
+      tags:
+        - API
+      parameters:
+        # - Parameter Object
+        - name: appkey
+          in: query
+          description: |
+            アプリケーションキーを指定します。
+          required: true
+          schema:
+            type: string
+        - name: pref
+          in: query
+          description: |
+            都道府県を指定します。
+
+            例「青森県」
+          schema:
+            type: string
+        - name: city
+          in: query
+          description: |
+            市区町村を指定します。
+
+            このパラメータはprefとセットで利用します。
+
+            例「青森市」
+          schema:
+            type: string
+        - name: systemid
+          in: query
+          description: |
+            図書館のシステムIDを指定します。
+
+            例「Aomori_Pref」
+          schema:
+            type: string
+        - name: geocode
+          in: query
+          description: |
+            緯度、経度を指定します。
+
+            例「136.7163027,35.390516」
+          schema:
+            type: number
+        - name: format
+          in: query
+          description: |
+            出力形式を指定します。xmlまたはjsonです。デフォルトはxml
+          schema:
+            type: string
+        - name: callback
+          in: query
+          description: |
+            JSONPのcallback関数名を指定します。
+
+            デフォルトはcallback。JSONとして応答する場合はcallbackに空白を指定してください。
+          schema:
+            type: string
+        - name: limit
+          in: query
+          description: |
+            図書館の取得件数を指定します。
+          schema:
+            type: string
       responses:
+        # - Responses Object
         "200":
+          # - Response Object
           description: "OK"
+          content:
+            # - Media Type Object
+            application/json:
+              # - Schema Object
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    systemid:
+                      type: string
+                    systemname:
+                      type: string
+                    libkey:
+                      type: string
+                    libid:
+                      type: integer
+                    short:
+                      type: string
+                    formal:
+                      type: string
+                    url_pc:
+                      type: string
+                    address:
+                      type: string
+                    pref:
+                      type: string
+                    city:
+                      type: string
+                    post:
+                      type: string
+                    tel:
+                      type: string
+                    geocode:
+                      type: string
+                    category:
+                      type: string
+                      enum:
+                        - SMALL
+                        - MEDIUM
+                        - LARGE
+                        - UNIV
+                        - SPECIAL
+                        - BM
+                    image:
+                      type: string
+                    distance:
+                      type: integer
+
   # 蔵書検索
   /check:
     get:
       summary: Check the presence and the lending status of a book
-      description: 図書館に対して蔵書の有無と貸出状況を問い合わせ
+      description: |
+        図書館に対して蔵書の有無と貸出状況を問い合わせ
+      tags:
+        - API
       responses:
         "200":
           description: "OK"
